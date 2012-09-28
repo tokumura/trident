@@ -5,14 +5,27 @@ Trident is the bridge script between TRITON and ORCA.
 
 == Getting Started
 
-1. Install gem 'rest_client'
+Install gem 'rest-client'
 
-  gem install rest_client
+  gem install rest-client
 
-2. Regist init.d
+Change $PATH, $DAEMON, $GEM_HOME for your enviroment
 
-  sudo cp ~/trident /etc/init.d/
-  sudo update-rc.d trident defaults
+  PATH=/home/tokumura/.rvm/rubies/ruby-1.9.3-p194/bin:/sbin:/usr/sbin:/bin:/usr/bin
+  DESC="trident for triton"
+  NAME=trident.rb
+  DAEMON=/home/tokumura/trident/trident.rb
+  DAEMON_ARGS=""
+  PIDFILE=/var/run/$NAME.pid
+  SCRIPTNAME=/etc/init.d/$NAME
+
+  GEM_HOME=/home/tokumura/.rvm/gems/ruby-1.9.3-p194
+  export GEM_HOME
+
+Regist init.d
+
+  sudo cp /home/tokumura/trident/trident /etc/init.d/
+  sudo update-rc.d trident start 40 2 3 4 5 . stop 10 0 1 6 .
 
 
 
