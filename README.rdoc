@@ -1,0 +1,19 @@
+== Trident
+
+Trident is the bridge script between TRITON and ORCA.
+
+
+== Getting Started
+
+1. Install gem 'rest_client'
+
+  gem install rest_client
+
+2. Regist init.d
+
+  sudo cp ~/trident /etc/init.d/
+  sudo update-rc.d trident defaults
+
+
+
+
