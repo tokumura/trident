@@ -126,12 +126,21 @@ BODY = <<EOF
 </data>
 EOF
 
-Process.daemon
+if Process.respond_to? :daemon
+  # Ruby 1.9
+  Process.daemon
+else
+  # Ruby 1.8
+  require 'webrick'
+  WEBrick::Daemon.start
+end
 
 while true
+  # REST request to TRITON
   doc_root = REXML::Document.new(RestClient.get('http://user:password@localhost:3000/exams.xml?patient_id=1&order_date=2012-09-25')).root
   puts doc_root
 
+  # API request to ORCA
   req.content_length = BODY.size
   req.content_type = CONTENT_TYPE
   req.body = BODY
@@ -142,6 +151,7 @@ while true
     res = http.request(req)
     puts res.body
   }
+
   sleep 10
   puts "Done. go next."
   $stdout = File.new('/tmp/trident.log', 'a+')
